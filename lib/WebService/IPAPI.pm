@@ -7,6 +7,7 @@ use strictures 2;
 use utf8;
 
 use Moo;
+use MooX::Enumeration;
 use Types::Standard qw(Str Enum);
 
 with 'Role::REST::Client';
@@ -19,7 +20,8 @@ has api_key => (
 
 has api_plan => (
     is => 'rw',
-    isa => Enum[qw(free paid)],
+    isa => Enum[qw(free standard business business_pro)],
+    handles => [qw/ is_free is_standard is_business is_business_pro /],
     default => sub { 'free' },
 );
 
@@ -27,7 +29,7 @@ has api_url => (
     isa => Str,
     is => 'ro',
     default => sub {
-        my $protocol = (shift->api_plan eq 'free') ? 'http' : 'https';
+        my $protocol = (shift->is_free) ? 'http' : 'https';
         return qq|$protocol://api.ipapi.com/api/|
     },
 );
@@ -41,6 +43,12 @@ sub lookup {
 sub bulk_lookup {
     my ($self, $ips, $params) = @_;
 
+    die "Expect an array of IP address" if (ref $ips ne 'ARRAY');
+
+    if (!$self->is_business || !$self->is_business_pro) {
+        die "Bulk IP lookup only for Business or Business Pro subscription plan"
+    }
+
     my $endpoint = join(",", $ips);
     return $self->_request($endpoint, $params);
 }
@@ -53,6 +61,10 @@ sub check {
 
 sub _request {
     my ($self, $endpoint, $params) = @_;
+
+    if (exists($params->{security}) && !$self->is_business_pro) {
+        die "Security data only for Business Pro subscription plan"
+    }
 
     my $format = exists($params->{output}) ? $params->{output} : 'json';
 

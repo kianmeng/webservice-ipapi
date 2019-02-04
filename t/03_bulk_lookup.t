@@ -16,11 +16,12 @@ BEGIN {
 my $got;
 my $ipapi = WebService::IPAPI->new(api_key => $ENV{IPAPI_ACCESS_KEY});
 
-$got = $ipapi->lookup('8.8.8.8');
-is($got->{country_code}, "US", 'expect country code match');
+dies_ok {
+    $got = $ipapi->bulk_lookup('8.8.8.8');
+} 'expect termination on missing an array of IP address';
 
 dies_ok {
-    $got = $ipapi->lookup('8.8.8.8', {security => 1});
+    $got = $ipapi->bulk_lookup(['8.8.8.8']);
 } 'expect termination on insufficient subscription plan';
 
 done_testing;

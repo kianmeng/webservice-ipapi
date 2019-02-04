@@ -4,6 +4,7 @@ requires 'strictures', '2';
 
 requires 'JSON';
 requires 'Moo';
+requires 'MooX::Enumeration';
 requires 'REST::Client';
 requires 'Role::REST::Client';
 requires 'Types::Standard';

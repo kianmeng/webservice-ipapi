@@ -3,6 +3,8 @@ use utf8;
 use warnings;
 
 use Test::More;
+use Test::Exception;
+
 use WebService::IPAPI;
 
 BEGIN {
@@ -16,5 +18,9 @@ my $ipapi = WebService::IPAPI->new(api_key => $ENV{IPAPI_ACCESS_KEY});
 
 $got = $ipapi->check();
 is(exists $got->{ip}, 1, 'expect ip exists');
+
+dies_ok {
+    $got = $ipapi->check({security => 1});
+} 'expect termination on insufficient subscription plan';
 
 done_testing;
