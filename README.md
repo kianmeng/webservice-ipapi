@@ -59,27 +59,38 @@ make request through HTTPS encryption protocol.
 
 The default API hostname and path. The protocol depends on the subscription plan.
 
-## lookup($ip\_address)
+## lookup($ip\_address, \[%params\])
 
-Query and get an IP address information.
+Query and get an IP address information. Optionally you can add more settings
+to adjust the output.
 
     my $ipapi = WebService::IPAPI->new(api_key => 'foobar');
     $ipapi->query('8.8.8.8');
 
-## bulk\_lookup($ip\_address)
+    # With optional parameters.
+    $ipapi->query('8.8.8.8', {hostname => 1, security => 1, output => 'xml'});
+
+## bulk\_lookup($ip\_address, \[%params\])
 
 Only for Paid subscription plan. Query and get multiple IP addresses
-information.
+information. Optionally you can add more settings to adjust the output.
 
     my $ipapi = WebService::IPAPI->new(api_key => 'foobar', api_plan => 'paid');
     $ipapi->query(['8.8.8.8', '8.8.4.4']);
 
-## check()
+    # With optional parameters.
+    $ipapi->query(['8.8.8.8', '8.8.4.4'], {language => 'zh'});
+
+## check(\[%params\])
 
 Look up the IP address details of the client which made the web service call.
+Optionally you can add more settings to adjust the output.
 
     my $ipapi = WebService::IPAPI->new(api_key => 'foobar');
     $ipapi->check();
+
+    # With optional parameters.
+    $ipapi->check({hostname => 1, security => 1, output => xml});
 
 # COPYRIGHT AND LICENSE
 

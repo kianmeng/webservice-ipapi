@@ -33,28 +33,28 @@ has api_url => (
 );
 
 sub lookup {
-    my ($self, $ip) = @_;
+    my ($self, $ip, $params) = @_;
 
-    return $self->_request($ip);
+    return $self->_request($ip, $params);
 }
 
 sub bulk_lookup {
-    my ($self, $ips) = @_;
+    my ($self, $ips, $params) = @_;
 
     my $endpoint = join(",", $ips);
-    return $self->_request($endpoint);
+    return $self->_request($endpoint, $params);
 }
 
 sub check {
-    my ($self) = @_;
+    my ($self, $params) = @_;
 
-    return $self->_request('check');
+    return $self->_request('check', $params);
 }
 
 sub _request {
-    my ($self, $endpoint, $params, $format) = @_;
+    my ($self, $endpoint, $params) = @_;
 
-    $format //= 'json';
+    my $format = exists($params->{output}) ? $params->{output} : 'json';
 
     $self->set_persistent_header('User-Agent' => __PACKAGE__ . $WebService::IPAPI::VERSION);
     $self->server($self->api_url);
@@ -129,27 +129,38 @@ make request through HTTPS encryption protocol.
 
 The default API hostname and path. The protocol depends on the subscription plan.
 
-=head2 lookup($ip_address)
+=head2 lookup($ip_address, [%params])
 
-Query and get an IP address information.
+Query and get an IP address information. Optionally you can add more settings
+to adjust the output.
 
     my $ipapi = WebService::IPAPI->new(api_key => 'foobar');
     $ipapi->query('8.8.8.8');
 
-=head2 bulk_lookup($ip_address)
+    # With optional parameters.
+    $ipapi->query('8.8.8.8', {hostname => 1, security => 1, output => 'xml'});
+
+=head2 bulk_lookup($ip_address, [%params])
 
 Only for Paid subscription plan. Query and get multiple IP addresses
-information.
+information. Optionally you can add more settings to adjust the output.
 
     my $ipapi = WebService::IPAPI->new(api_key => 'foobar', api_plan => 'paid');
     $ipapi->query(['8.8.8.8', '8.8.4.4']);
 
-=head2 check()
+    # With optional parameters.
+    $ipapi->query(['8.8.8.8', '8.8.4.4'], {language => 'zh'});
+
+=head2 check([%params])
 
 Look up the IP address details of the client which made the web service call.
+Optionally you can add more settings to adjust the output.
 
     my $ipapi = WebService::IPAPI->new(api_key => 'foobar');
     $ipapi->check();
+
+    # With optional parameters.
+    $ipapi->check({hostname => 1, security => 1, output => xml});
 
 =head1 COPYRIGHT AND LICENSE
 
