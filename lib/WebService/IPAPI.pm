@@ -13,7 +13,9 @@ use Types::Standard qw(Str Enum);
 with 'Role::REST::Client';
 
 has api_key => (
-    isa => Str,
+    isa => sub {
+        die "API key must be length of 32 characters!" if (length $_[0] != 32);
+    },
     is => 'rw',
     required => 1
 );
