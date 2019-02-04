@@ -6,6 +6,7 @@ use namespace::clean;
 use strictures 2;
 use utf8;
 
+use Carp qw(confess);
 use Moo;
 use MooX::Enumeration;
 use Types::Standard qw(Str Enum);
@@ -14,7 +15,7 @@ with 'Role::REST::Client';
 
 has api_key => (
     isa => sub {
-        die "API key must be length of 32 characters!" if (length $_[0] != 32);
+        confess "API key must be length of 32 characters!" if (length $_[0] != 32);
     },
     is => 'rw',
     required => 1
@@ -45,10 +46,10 @@ sub lookup {
 sub bulk_lookup {
     my ($self, $ips, $params) = @_;
 
-    die "Expect an array of IP address" if (ref $ips ne 'ARRAY');
+    confess "Expect an array of IP address" if (ref $ips ne 'ARRAY');
 
     if (!$self->is_business || !$self->is_business_pro) {
-        die "Bulk IP lookup only for Business or Business Pro subscription plan"
+        confess "Bulk IP lookup only for Business or Business Pro subscription plan"
     }
 
     my $endpoint = join(",", $ips);
@@ -65,7 +66,7 @@ sub _request {
     my ($self, $endpoint, $params) = @_;
 
     if (exists($params->{security}) && !$self->is_business_pro) {
-        die "Security data only for Business Pro subscription plan"
+        confess "Security data only for Business Pro subscription plan"
     }
 
     my $format = exists($params->{output}) ? $params->{output} : 'json';
