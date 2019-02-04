@@ -14,7 +14,7 @@ BEGIN {
 my $got;
 my $ipapi = WebService::IPAPI->new(api_key => $ENV{IPAPI_ACCESS_KEY});
 
-$got = $ipapi->query('8.8.8.8');
-is($got->{country_code}, "US", 'expect country code match');
+$got = $ipapi->check();
+is(exists $got->{ip}, 1, 'expect ip exists');
 
 done_testing;

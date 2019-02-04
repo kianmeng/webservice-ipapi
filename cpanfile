@@ -1,4 +1,4 @@
-requires 'perl', '5.008005';
+requires 'perl', '5.010';
 requires 'namespace::clean';
 requires 'strictures', '2';
 

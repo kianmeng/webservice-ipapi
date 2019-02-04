@@ -19,7 +19,7 @@ has api_key => (
 
 has api_plan => (
     is => 'rw',
-    isa => Enum[qw( free paid)],
+    isa => Enum[qw(free paid)],
     default => sub { 'free' },
 );
 
@@ -32,19 +32,40 @@ has api_url => (
     },
 );
 
-sub query {
+sub lookup {
+    my ($self, $ip) = @_;
+
+    return $self->_request($ip);
+}
+
+sub bulk_lookup {
     my ($self, $ips) = @_;
+
+    my $endpoint = join(",", $ips);
+    return $self->_request($endpoint);
+}
+
+sub check {
+    my ($self) = @_;
+
+    return $self->_request('check');
+}
+
+sub _request {
+    my ($self, $endpoint, $params, $format) = @_;
+
+    $format //= 'json';
 
     $self->set_persistent_header('User-Agent' => __PACKAGE__ . $WebService::IPAPI::VERSION);
     $self->server($self->api_url);
-    $self->type(qq|application/json|);
+    $self->type(qq|application/$format|);
 
     my $queries = {
         access_key => $self->api_key
     };
+    $queries = {%$queries, %$params} if (defined $params);
 
-    my $path = (ref $ips eq 'ARRAY') ? join(",", $ips) : $ips;
-    my $response = $self->get($path, $queries);
+    my $response = $self->get($endpoint, $queries);
 
     return $response->data;
 }
@@ -94,7 +115,7 @@ Compulsory. The API access key used to make request through web service.
 Optional. The API subscription plan used when accessing the API. There are two
 subscription plans of 'free' and 'paid'. By default, the subscription plan is
 'free'. The difference between two subscription plans is only 'paid' plan can
-make request through HTTPS protocol.
+make request through HTTPS encryption protocol.
 
     # The API request URL is http://api.ipapi.com/api/
     my $ipapi = WebService::IPAPI->new(api_key => 'foo');
@@ -106,19 +127,29 @@ make request through HTTPS protocol.
 
 =head3 api_url
 
-The default API hostname and path. The protocl depends on the subscriptin plan.
+The default API hostname and path. The protocol depends on the subscription plan.
 
-=head2 query($ip_addresses)
+=head2 lookup($ip_address)
 
-Query and get an IP address or list of IP addresses information.
+Query and get an IP address information.
 
-    # Only for Free plan.
     my $ipapi = WebService::IPAPI->new(api_key => 'foobar');
     $ipapi->query('8.8.8.8');
 
-    # Only for Pro plan.
+=head2 bulk_lookup($ip_address)
+
+Only for Paid subscription plan. Query and get multiple IP addresses
+information.
+
     my $ipapi = WebService::IPAPI->new(api_key => 'foobar', api_plan => 'paid');
     $ipapi->query(['8.8.8.8', '8.8.4.4']);
+
+=head2 check()
+
+Look up the IP address details of the client which made the web service call.
+
+    my $ipapi = WebService::IPAPI->new(api_key => 'foobar');
+    $ipapi->check();
 
 =head1 COPYRIGHT AND LICENSE
 

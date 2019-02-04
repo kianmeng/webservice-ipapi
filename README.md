@@ -45,7 +45,7 @@ Compulsory. The API access key used to make request through web service.
 Optional. The API subscription plan used when accessing the API. There are two
 subscription plans of 'free' and 'paid'. By default, the subscription plan is
 'free'. The difference between two subscription plans is only 'paid' plan can
-make request through HTTPS protocol.
+make request through HTTPS encryption protocol.
 
     # The API request URL is http://api.ipapi.com/api/
     my $ipapi = WebService::IPAPI->new(api_key => 'foo');
@@ -57,19 +57,29 @@ make request through HTTPS protocol.
 
 ### api\_url
 
-The default API hostname and path. The protocl depends on the subscriptin plan.
+The default API hostname and path. The protocol depends on the subscription plan.
 
-## query($ip\_addresses)
+## lookup($ip\_address)
 
-Query and get an IP address or list of IP addresses information.
+Query and get an IP address information.
 
-    # Only for Free plan.
     my $ipapi = WebService::IPAPI->new(api_key => 'foobar');
     $ipapi->query('8.8.8.8');
 
-    # Only for Pro plan.
+## bulk\_lookup($ip\_address)
+
+Only for Paid subscription plan. Query and get multiple IP addresses
+information.
+
     my $ipapi = WebService::IPAPI->new(api_key => 'foobar', api_plan => 'paid');
     $ipapi->query(['8.8.8.8', '8.8.4.4']);
+
+## check()
+
+Look up the IP address details of the client which made the web service call.
+
+    my $ipapi = WebService::IPAPI->new(api_key => 'foobar');
+    $ipapi->check();
 
 # COPYRIGHT AND LICENSE
 
