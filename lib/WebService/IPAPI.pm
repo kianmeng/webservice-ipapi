@@ -127,10 +127,11 @@ Compulsory. The API access key used to make request through web service.
 
 =head3 api_plan
 
-Optional. The API subscription plan used when accessing the API. There are two
-subscription plans of 'free' and 'paid'. By default, the subscription plan is
-'free'. The difference between two subscription plans is only 'paid' plan can
-make request through HTTPS encryption protocol.
+Optional. The API subscription plan used when accessing the API. There are four
+subscription plans: free, standard, business, and business_pro. By default, the
+subscription plan is 'free'. The main difference between free and non-free
+subscription plans are HTTPS encryption protocol support and additional
+information.
 
     # The API request URL is http://api.ipapi.com/api/
     my $ipapi = WebService::IPAPI->new(api_key => 'foo');
