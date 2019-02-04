@@ -26,7 +26,7 @@ address.
 
 Source repo at [https://github.com/kianmeng/webservice-ipapi](https://github.com/kianmeng/webservice-ipapi).
 
-How to contribute? Follow through the [CONTRIBUTING.md](https://github.com/kianmeng/webservice-ipapi/CONTRIBUTING.md) document to setup your development environment.
+How to contribute? Follow through the [CONTRIBUTING.md](https://github.com/kianmeng/webservice-ipapi/blob/master/CONTRIBUTING.md) document to setup your development environment.
 
 # COPYRIGHT AND LICENSE
 

@@ -1,8 +1,17 @@
 # CONTRIBUTING
 
-Follow these steps to setup the development environment.
+## GitHub
+Follow these steps to make changes to the repository.
 
-## Docker
+1. [Create a fork](https://help.github.com/articles/fork-a-repo/) of the [repository](https://github.com/kianmeng/webservice-ipapi).
+2. Setup your [development environment](#development-environment).
+3. Do necessary changes and make sure all tests passed.
+4. [Submit a pull request](https://help.github.com/articles/creating-a-pull-request/).
+
+## Development Environment
+Setup your development environment as follows.
+
+### Docker
 
 If you have Docker installed, you can build your Docker container for this
 project.
@@ -11,7 +20,7 @@ project.
     $ docker run -it -v $(pwd):/root webservice-ipapi bash
     # cpanm --installdeps --notest .
 
-## Milla
+### Milla
 
 Setting up the required packages.
 
@@ -30,7 +39,3 @@ Several ways to run the test.
     $ AUTHOR_TESTING=1 RELEASE_TESTING=1 milla run prove t/01_instantiation.t
     $ LOGGING=1 milla run prove t/t/02_request.t
 
-Release the module.
-
-    $ milla build
-    $ milla release
