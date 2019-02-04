@@ -1,8 +1,53 @@
 package WebService::IPAPI;
 
-use strict;
-use 5.008_005;
 our $VERSION = '0.01';
+
+use namespace::clean;
+use strictures 2;
+use utf8;
+
+use Moo;
+use Types::Standard qw(Str Enum);
+
+with 'Role::REST::Client';
+
+has api_key => (
+    isa => Str,
+    is => 'rw',
+    required => 1
+);
+
+has api_plan => (
+    is => 'rw',
+    isa => Enum[qw( free paid)],
+    default => sub { 'free' },
+);
+
+has api_url => (
+    isa => Str,
+    is => 'ro',
+    default => sub {
+        my $protocol = (shift->api_plan eq 'free') ? 'http' : 'https';
+        return qq|$protocol://api.ipapi.com/api/|
+    },
+);
+
+sub query {
+    my ($self, $ips) = @_;
+
+    $self->set_persistent_header('User-Agent' => __PACKAGE__ . $WebService::IPAPI::VERSION);
+    $self->server($self->api_url);
+    $self->type(qq|application/json|);
+
+    my $queries = {
+        access_key => $self->api_key
+    };
+
+    my $path = (ref $ips eq 'ARRAY') ? join(",", $ips) : $ips;
+    my $response = $self->get($path, $queries);
+
+    return $response->data;
+}
 
 1;
 __END__
@@ -17,8 +62,10 @@ WebService::IPAPI - Perl library for using IPAPI, https://ipapi.com.
 
   use WebService::IPAPI;
 
-  my $ipapi = WebService::IPAPI->new(access_key => 'foobar');
+  my $ipapi = WebService::IPAPI->new(api_key => 'foobar');
   $ipapi->query('8.8.8.8');
+
+  # Only for Pro plan.
   $ipapi->query(['8.8.8.8', '8.8.4.4']);
 
 =head1 DESCRIPTION
@@ -31,6 +78,47 @@ address.
 Source repo at L<https://github.com/kianmeng/webservice-ipapi|https://github.com/kianmeng/webservice-ipapi>.
 
 How to contribute? Follow through the L<CONTRIBUTING.md|https://github.com/kianmeng/webservice-ipapi/blob/master/CONTRIBUTING.md> document to setup your development environment.
+
+=head1 METHODS
+
+=head2 new($api_key, $api_plan)
+
+Construct a new WebService::IPAPI instance.
+
+=head3 api_key
+
+Compulsory. The API access key used to make request through web service.
+
+=head3 api_plan
+
+Optional. The API subscription plan used when accessing the API. There are two
+subscription plans of 'free' and 'paid'. By default, the subscription plan is
+'free'. The difference between two subscription plans is only 'paid' plan can
+make request through HTTPS protocol.
+
+    # The API request URL is http://api.ipapi.com/api/
+    my $ipapi = WebService::IPAPI->new(api_key => 'foo');
+    print $ipapi->api_url;
+
+    # The API request URL is https://api.ipapi.com/api/
+    my $ipapi = WebService::IPAPI->new(api_key => 'foo', api_plan => 'paid');
+    print $ipapi->api_url;
+
+=head3 api_url
+
+The default API hostname and path. The protocl depends on the subscriptin plan.
+
+=head2 query($ip_addresses)
+
+Query and get an IP address or list of IP addresses information.
+
+    # Only for Free plan.
+    my $ipapi = WebService::IPAPI->new(api_key => 'foobar');
+    $ipapi->query('8.8.8.8');
+
+    # Only for Pro plan.
+    my $ipapi = WebService::IPAPI->new(api_key => 'foobar', api_plan => 'paid');
+    $ipapi->query(['8.8.8.8', '8.8.4.4']);
 
 =head1 COPYRIGHT AND LICENSE
 

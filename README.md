@@ -13,8 +13,10 @@ WebService::IPAPI - Perl library for using IPAPI, https://ipapi.com.
 
     use WebService::IPAPI;
 
-    my $ipapi = WebService::IPAPI->new(access_key => 'foobar');
+    my $ipapi = WebService::IPAPI->new(api_key => 'foobar');
     $ipapi->query('8.8.8.8');
+
+    # Only for Pro plan.
     $ipapi->query(['8.8.8.8', '8.8.4.4']);
 
 # DESCRIPTION
@@ -27,6 +29,47 @@ address.
 Source repo at [https://github.com/kianmeng/webservice-ipapi](https://github.com/kianmeng/webservice-ipapi).
 
 How to contribute? Follow through the [CONTRIBUTING.md](https://github.com/kianmeng/webservice-ipapi/blob/master/CONTRIBUTING.md) document to setup your development environment.
+
+# METHODS
+
+## new($api\_key, $api\_plan)
+
+Construct a new WebService::IPAPI instance.
+
+### api\_key
+
+Compulsory. The API access key used to make request through web service.
+
+### api\_plan
+
+Optional. The API subscription plan used when accessing the API. There are two
+subscription plans of 'free' and 'paid'. By default, the subscription plan is
+'free'. The difference between two subscription plans is only 'paid' plan can
+make request through HTTPS protocol.
+
+    # The API request URL is http://api.ipapi.com/api/
+    my $ipapi = WebService::IPAPI->new(api_key => 'foo');
+    print $ipapi->api_url;
+
+    # The API request URL is https://api.ipapi.com/api/
+    my $ipapi = WebService::IPAPI->new(api_key => 'foo', api_plan => 'paid');
+    print $ipapi->api_url;
+
+### api\_url
+
+The default API hostname and path. The protocl depends on the subscriptin plan.
+
+## query($ip\_addresses)
+
+Query and get an IP address or list of IP addresses information.
+
+    # Only for Free plan.
+    my $ipapi = WebService::IPAPI->new(api_key => 'foobar');
+    $ipapi->query('8.8.8.8');
+
+    # Only for Pro plan.
+    my $ipapi = WebService::IPAPI->new(api_key => 'foobar', api_plan => 'paid');
+    $ipapi->query(['8.8.8.8', '8.8.4.4']);
 
 # COPYRIGHT AND LICENSE
 
