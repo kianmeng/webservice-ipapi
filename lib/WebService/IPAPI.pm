@@ -117,7 +117,7 @@ How to contribute? Follow through the L<CONTRIBUTING.md|https://github.com/kianm
 
 =head1 METHODS
 
-=head2 new($api_key, $api_plan)
+=head2 new($api_key, [$api_plan])
 
 Construct a new WebService::IPAPI instance.
 

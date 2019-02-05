@@ -32,7 +32,7 @@ How to contribute? Follow through the [CONTRIBUTING.md](https://github.com/kianm
 
 # METHODS
 
-## new($api\_key, $api\_plan)
+## new($api\_key, \[$api\_plan\])
 
 Construct a new WebService::IPAPI instance.
 
