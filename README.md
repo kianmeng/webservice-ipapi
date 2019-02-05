@@ -21,7 +21,7 @@ WebService::IPAPI - Perl library for using IPAPI, https://ipapi.com.
 
 # DESCRIPTION
 
-WebService::IPAPI is Perl library for obtaining information on IPv4 or IPv6
+WebService::IPAPI is a Perl library for obtaining information on IPv4 or IPv6
 address.
 
 # DEVELOPMENT
@@ -49,11 +49,11 @@ subscription plans are HTTPS encryption protocol support and additional
 information.
 
     # The API request URL is http://api.ipapi.com/api/
-    my $ipapi = WebService::IPAPI->new(api_key => 'foo');
+    my $ipapi = WebService::IPAPI->new(api_key => '1xxxxxxxxxxxxxxxxxxxxxxxxxxxxx32');
     print $ipapi->api_url;
 
     # The API request URL is https://api.ipapi.com/api/
-    my $ipapi = WebService::IPAPI->new(api_key => 'foo', api_plan => 'paid');
+    my $ipapi = WebService::IPAPI->new(api_key => '1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx32', api_plan => 'paid');
     print $ipapi->api_url;
 
 ### api\_url
@@ -65,7 +65,7 @@ The default API hostname and path. The protocol depends on the subscription plan
 Query and get an IP address information. Optionally you can add more settings
 to adjust the output.
 
-    my $ipapi = WebService::IPAPI->new(api_key => 'foobar');
+    my $ipapi = WebService::IPAPI->new(api_key => '1xxxxxxxxxxxxxxxxxxxxxxxxxxxxx32');
     $ipapi->query('8.8.8.8');
 
     # With optional parameters.
@@ -76,7 +76,7 @@ to adjust the output.
 Only for Paid subscription plan. Query and get multiple IP addresses
 information. Optionally you can add more settings to adjust the output.
 
-    my $ipapi = WebService::IPAPI->new(api_key => 'foobar', api_plan => 'paid');
+    my $ipapi = WebService::IPAPI->new(api_key => '1xxxxxxxxxxxxxxxxxxxxxxxxxxxxx32', api_plan => 'paid');
     $ipapi->query(['8.8.8.8', '8.8.4.4']);
 
     # With optional parameters.
@@ -87,7 +87,7 @@ information. Optionally you can add more settings to adjust the output.
 Look up the IP address details of the client which made the web service call.
 Optionally you can add more settings to adjust the output.
 
-    my $ipapi = WebService::IPAPI->new(api_key => 'foobar');
+    my $ipapi = WebService::IPAPI->new(api_key => '1xxxxxxxxxxxxxxxxxxxxxxxxxxxxx32');
     $ipapi->check();
 
     # With optional parameters.
@@ -95,7 +95,7 @@ Optionally you can add more settings to adjust the output.
 
 # COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2019 by Kian Meng, Ang.
+This software is Copyright (c) 2019 Kian Meng, Ang.
 
 This is free software, licensed under:
 
