@@ -8,7 +8,7 @@ use Test::Exception;
 use WebService::IPAPI;
 
 BEGIN {
-    if (!defined $ENV{IPAPI_ACCESS_KEY}) {
+    unless ($ENV{IPAPI_ACCESS_KEY}) {
         plan skip_all => '$ENV{IPAPI_ACCESS_KEY} not set, skipping live tests'
     }
 }

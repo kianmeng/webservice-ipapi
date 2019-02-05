@@ -20,6 +20,10 @@ foreach my $plan (qw(standard business business_pro)) {
 
 dies_ok {
     $ipapi = WebService::IPAPI->new(api_key => 'foobar');
-} 'expect termination on invalid API key length';
+} 'expect exception invalid API key length';
+
+dies_ok {
+    $ipapi = WebService::IPAPI->new();
+} 'expect exception on missing argument: api_key';
 
 done_testing;
