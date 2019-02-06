@@ -38,5 +38,5 @@ Several ways to run the test.
     $ AUTHOR_TESTING=1 RELEASE_TESTING=1 milla test
     $ AUTHOR_TESTING=1 RELEASE_TESTING=1 milla run prove t/01_instantiation.t
     $ LOGGING=1 milla run prove t/01_instantiation.t
-    $ IPAPI_ACCESS_KEY=foobar milla run prove t/02_query.t
+    $ IPAPI_ACCESS_KEY=1xxxxxxxxxxxxxxxxxxxxxxxxxxxxx32 milla run prove t/02_query.t
 

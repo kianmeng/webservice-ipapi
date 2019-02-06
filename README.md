@@ -7,13 +7,14 @@
 
 # NAME
 
-WebService::IPAPI - Perl library for using IPAPI, https://ipapi.com.
+WebService::IPAPI - Perl library for IPAPI's Geolocation API,
+https://ipapi.com.
 
 # SYNOPSIS
 
     use WebService::IPAPI;
 
-    my $ipapi = WebService::IPAPI->new(api_key => 'foobar');
+    my $ipapi = WebService::IPAPI->new(api_key => '1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx32');
     $ipapi->query('8.8.8.8');
 
     # Only for Pro plan.
@@ -43,7 +44,7 @@ Compulsory. The API access key used to make request through web service.
 ### api\_plan
 
 Optional. The API subscription plan used when accessing the API. There are four
-subscription plans: free, standard, business, and business\_pro. By default, the
+subscription plans: free, standard, business, and business\_pro. The
 subscription plan is 'free'. The main difference between free and non-free
 subscription plans are HTTPS encryption protocol support and additional
 information.
@@ -53,7 +54,10 @@ information.
     print $ipapi->api_url;
 
     # The API request URL is https://api.ipapi.com/api/
-    my $ipapi = WebService::IPAPI->new(api_key => '1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx32', api_plan => 'paid');
+    my $ipapi = WebService::IPAPI->new(
+        api_key => '1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx32',
+        api_plan => 'standard'
+    );
     print $ipapi->api_url;
 
 ### api\_url
@@ -73,10 +77,14 @@ to adjust the output.
 
 ## bulk\_lookup($ip\_address, \[%params\])
 
-Only for Paid subscription plan. Query and get multiple IP addresses
-information. Optionally you can add more settings to adjust the output.
+Only for paid subscription plans (standard, business, business\_pro). Query and
+get multiple IP addresses information. Optionally you can add more settings to
+adjust the output.
 
-    my $ipapi = WebService::IPAPI->new(api_key => '1xxxxxxxxxxxxxxxxxxxxxxxxxxxxx32', api_plan => 'paid');
+    my $ipapi = WebService::IPAPI->new(
+        api_key => '1xxxxxxxxxxxxxxxxxxxxxxxxxxxxx32',
+        api_plan => 'standard'
+    );
     $ipapi->query(['8.8.8.8', '8.8.4.4']);
 
     # With optional parameters.
