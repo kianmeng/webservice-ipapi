@@ -23,7 +23,7 @@ address.
 
 # DEVELOPMENT
 
-Source repo at [https://github.com/kianmeng/webservice-ipapi](https://github.com/kianmeng/webservice-ipapi).
+Source repository at [https://github.com/kianmeng/webservice-ipapi](https://github.com/kianmeng/webservice-ipapi).
 
 How to contribute? Follow through the [CONTRIBUTING.md](https://github.com/kianmeng/webservice-ipapi/blob/master/CONTRIBUTING.md) document to setup your development environment.
 
@@ -99,7 +99,7 @@ Optionally you can add more settings to adjust the output.
 
 # AUTHOR
 
-Kian Meng, Ang <kianmeng@users.noreply.github.com>
+Kian Meng, Ang <kianmeng@cpan.org>
 
 # COPYRIGHT AND LICENSE
 

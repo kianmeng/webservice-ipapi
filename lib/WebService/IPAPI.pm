@@ -90,6 +90,8 @@ __END__
 
 =encoding utf-8
 
+=for stopwords ipapi geolocation ipv4 ipv6 https hostname
+
 =head1 NAME
 
 WebService::IPAPI - Perl library for IPAPI's Geolocation API,
@@ -112,7 +114,7 @@ address.
 
 =head1 DEVELOPMENT
 
-Source repo at L<https://github.com/kianmeng/webservice-ipapi|https://github.com/kianmeng/webservice-ipapi>.
+Source repository at L<https://github.com/kianmeng/webservice-ipapi|https://github.com/kianmeng/webservice-ipapi>.
 
 How to contribute? Follow through the L<CONTRIBUTING.md|https://github.com/kianmeng/webservice-ipapi/blob/master/CONTRIBUTING.md> document to setup your development environment.
 
@@ -188,7 +190,7 @@ Optionally you can add more settings to adjust the output.
 
 =head1 AUTHOR
 
-Kian Meng, Ang E<lt>kianmeng@users.noreply.github.comE<gt>
+Kian Meng, Ang E<lt>kianmeng@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
