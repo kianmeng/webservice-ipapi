@@ -101,6 +101,10 @@ Optionally you can add more settings to adjust the output.
     # With optional parameters.
     $ipapi->check({hostname => 1, security => 1, output => xml});
 
+# AUTHOR
+
+Kian Meng, Ang <kianmeng@users.noreply.github.com>
+
 # COPYRIGHT AND LICENSE
 
 This software is Copyright (c) 2019 Kian Meng, Ang.
@@ -108,7 +112,3 @@ This software is Copyright (c) 2019 Kian Meng, Ang.
 This is free software, licensed under:
 
     The Artistic License 2.0 (GPL Compatible)
-
-# AUTHOR
-
-Kian Meng, Ang <kianmeng@users.noreply.github.com>

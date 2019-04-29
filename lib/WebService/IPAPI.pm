@@ -1,7 +1,5 @@
 package WebService::IPAPI;
 
-our $VERSION = '0.01';
-
 use namespace::clean;
 use strictures 2;
 use utf8;
@@ -13,12 +11,15 @@ use Types::Standard qw(Str Enum);
 
 with 'Role::REST::Client';
 
+our $VERSION = '0.01';
+
 has api_key => (
     isa => sub {
-        confess "API key must be length of 32 characters!" if (length $_[0] != 32);
+        confess q|API key must be length of 32 characters!|
+            if (length $_[0] != 32);
     },
     is => 'rw',
-    required => 1
+    required => 1,
 );
 
 has api_plan => (
@@ -33,7 +34,7 @@ has api_url => (
     is => 'ro',
     default => sub {
         my $protocol = (shift->is_free) ? 'http' : 'https';
-        return qq|$protocol://api.ipapi.com/api/|
+        return qq|$protocol://api.ipapi.com/api/|;
     },
 );
 
@@ -46,13 +47,13 @@ sub lookup {
 sub bulk_lookup {
     my ($self, $ips, $params) = @_;
 
-    confess "Expect an array of IP address" if (ref $ips ne 'ARRAY');
+    confess 'Expect an array of IP address' if (ref $ips ne 'ARRAY');
 
     if (!$self->is_business || !$self->is_business_pro) {
-        confess "Bulk IP lookup only for Business or Business Pro subscription plan"
+        confess 'Bulk IP lookup only for Business or Business Pro subscription plan';
     }
 
-    my $endpoint = join(",", $ips);
+    my $endpoint = join q|,|, $ips;
     return $self->_request($endpoint, $params);
 }
 
@@ -66,19 +67,18 @@ sub _request {
     my ($self, $endpoint, $params) = @_;
 
     if (exists($params->{security}) && !$self->is_business_pro) {
-        confess "Security data only for Business Pro subscription plan"
+        confess 'Security data only for Business Pro subscription plan';
     }
 
     my $format = exists($params->{output}) ? $params->{output} : 'json';
 
-    $self->set_persistent_header('User-Agent' => __PACKAGE__ . $WebService::IPAPI::VERSION);
+    $self->set_persistent_header(
+        'User-Agent' => __PACKAGE__ . $WebService::IPAPI::VERSION);
     $self->server($self->api_url);
     $self->type(qq|application/$format|);
 
-    my $queries = {
-        access_key => $self->api_key
-    };
-    $queries = {%$queries, %$params} if (defined $params);
+    my $queries = {access_key => $self->api_key};
+    $queries = {%{$queries}, %{$params}} if (defined $params);
 
     my $response = $self->get($endpoint, $queries);
 
@@ -186,6 +186,10 @@ Optionally you can add more settings to adjust the output.
     # With optional parameters.
     $ipapi->check({hostname => 1, security => 1, output => xml});
 
+=head1 AUTHOR
+
+Kian Meng, Ang E<lt>kianmeng@users.noreply.github.comE<gt>
+
 =head1 COPYRIGHT AND LICENSE
 
 This software is Copyright (c) 2019 Kian Meng, Ang.
@@ -193,9 +197,5 @@ This software is Copyright (c) 2019 Kian Meng, Ang.
 This is free software, licensed under:
 
     The Artistic License 2.0 (GPL Compatible)
-
-=head1 AUTHOR
-
-Kian Meng, Ang E<lt>kianmeng@users.noreply.github.comE<gt>
 
 =cut
