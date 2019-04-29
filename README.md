@@ -1,7 +1,3 @@
-[![Build Status](https://travis-ci.org/kianmeng/webservice-ipapi.svg?branch=master)](https://travis-ci.org/kianmeng/webservice-ipapi)
-[![codecov](https://codecov.io/gh/kianmeng/webservice-ipapi/branch/master/graph/badge.svg)](https://codecov.io/gh/kianmeng/webservice-ipapi)
-[![Coverage Status](https://coveralls.io/repos/kianmeng/webservice-ipapi/badge.svg?branch=master)](https://coveralls.io/r/kianmeng/webservice-ipapi?branch=master)
-[![Kwalitee status](http://cpants.cpanauthors.org/dist/WebService-IPAPI.png)](http://cpants.charsbar.org/dist/overview/WebService-IPAPI)
 [![Cpan license](https://img.shields.io/cpan/l/WebService-IPAPI.svg)](https://metacpan.org/release/WebService-IPAPI)
 [![Cpan version](https://img.shields.io/cpan/v/WebService-IPAPI.svg)](https://metacpan.org/release/WebService-IPAPI)
 
